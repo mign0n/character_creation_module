@@ -1,6 +1,7 @@
 """Character creation module for RPG game."""
 
 from random import randint
+from typing import Optional
 
 import graphic_arts.start_game_banner
 
@@ -22,11 +23,11 @@ class Character:
     SPECIAL_SKILL = 'Удача'
     SPECIAL_BUFF = 15
 
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         """Initialize a class instance with the `name` attribute."""
         self.name = name
 
-    def attack(self):
+    def attack(self) -> str:
         """
         Calculate the damage caused by the character to the enemy.
 
@@ -36,7 +37,7 @@ class Character:
         value_attack = DEFAULT_ATTACK + randint(*self.RANGE_VALUE_ATTACK)
         return f'{self.name} нанёс противнику урон, равный {value_attack}'
 
-    def defence(self):
+    def defence(self) -> str:
         """
         Calculate the value of blocked damage.
 
@@ -46,7 +47,7 @@ class Character:
         value_defence = DEFAULT_DEFENCE + randint(*self.RANGE_VALUE_DEFENCE)
         return f'{self.name} блокировал {value_defence} ед. урона.'
 
-    def special(self):
+    def special(self) -> str:
         """
         Show information about the special skill used by the character.
 
@@ -56,7 +57,7 @@ class Character:
         return (f'{self.name} применил специальное умение '
                 f'"{self.SPECIAL_SKILL} {self.SPECIAL_BUFF}".')
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Show information about character."""
         return f'{self.__class__.__name__} - {self.BRIEF_DESC_CHAR_CLASS}.'
 
@@ -106,7 +107,7 @@ class Healer(Character):
     SPECIAL_SKILL = 'Защита'
 
 
-def start_training(character):
+def start_training(character: Character) -> str:
     """Launch character training mode."""
     commands = {
         'attack': character.attack(),
@@ -135,7 +136,7 @@ def choice_char_class(char_name: str) -> Character:
     """
     game_classes = {'warrior': Warrior, 'mage': Mage, 'healer': Healer}
 
-    approve_choice: str = None
+    approve_choice: Optional[str] = None
 
     while approve_choice != 'y':
         selected_class = input('Введи название персонажа, '
@@ -158,5 +159,5 @@ if __name__ == '__main__':
           'Сейчас твоя выносливость — 80, атака — 5 и защита — 10.')
     print('Ты можешь выбрать один из трёх путей силы:')
     print('Воитель, Маг, Лекарь')
-    char_class: str = choice_char_class(char_name)
+    char_class: Character = choice_char_class(char_name)
     print(start_training(char_class))
