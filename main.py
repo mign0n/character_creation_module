@@ -1,3 +1,5 @@
+"""Character creation module for RPG game."""
+
 from random import randint
 
 import graphic_arts.start_game_banner
@@ -8,6 +10,12 @@ DEFAULT_STAMINA = 80
 
 
 class Character:
+    """
+    Basic Character Class.
+
+    Defines a character's basic properties and skills.
+    """
+
     BRIEF_DESC_CHAR_CLASS = 'отважный любитель приключений'
     RANGE_VALUE_ATTACK = (1, 3)
     RANGE_VALUE_DEFENCE = (1, 5)
@@ -15,25 +23,51 @@ class Character:
     SPECIAL_BUFF = 15
 
     def __init__(self, name):
+        """Initialize a class instance with the `name` attribute."""
         self.name = name
 
     def attack(self):
+        """
+        Calculate the damage caused by the character to the enemy.
+
+        Return a string containing the character's name and the value
+        of the damage dealt.
+        """
         value_attack = DEFAULT_ATTACK + randint(*self.RANGE_VALUE_ATTACK)
         return f'{self.name} нанёс противнику урон, равный {value_attack}'
 
     def defence(self):
+        """
+        Calculate the value of blocked damage.
+
+        Return a string containing the character's name and the value
+        of the blocked damage.
+        """
         value_defence = DEFAULT_DEFENCE + randint(*self.RANGE_VALUE_DEFENCE)
         return f'{self.name} блокировал {value_defence} ед. урона.'
 
     def special(self):
+        """
+        Show information about the special skill used by the character.
+
+        Return a string containing the name of the character,
+        the special skill being used, and the value of that special skill.
+        """
         return (f'{self.name} применил специальное умение '
                 f'"{self.SPECIAL_SKILL} {self.SPECIAL_BUFF}".')
 
     def __str__(self):
+        """Show information about character."""
         return f'{self.__class__.__name__} - {self.BRIEF_DESC_CHAR_CLASS}.'
 
 
 class Warrior(Character):
+    """
+    Character class 'Warrior'.
+
+    Defines a warrior properties and skills.
+    """
+
     BRIEF_DESC_CHAR_CLASS = (' дерзкий воин ближнего боя. '
                              'Сильный, выносливый и отважный')
     RANGE_VALUE_ATTACK = (3, 5)
@@ -43,6 +77,12 @@ class Warrior(Character):
 
 
 class Mage(Character):
+    """
+    Character class 'Mage'.
+
+    Defines a mage properties and skills.
+    """
+
     BRIEF_DESC_CHAR_CLASS = (' находчивый воин дальнего боя. '
                              'Обладает высоким интеллектом')
     RANGE_VALUE_ATTACK = (5, 10)
@@ -52,6 +92,12 @@ class Mage(Character):
 
 
 class Healer(Character):
+    """
+    Character class 'Healer'.
+
+    Defines a healer properties and skills.
+    """
+
     BRIEF_DESC_CHAR_CLASS = (' могущественный заклинатель. '
                              'Черпает силы из природы, веры и духов')
     RANGE_VALUE_ATTACK = (-3, -1)
@@ -61,7 +107,7 @@ class Healer(Character):
 
 
 def start_training(character):
-    """Запустить режим тренировки персонажа."""
+    """Launch character training mode."""
     commands = {
         'attack': character.attack(),
         'defence': character.defence(),
@@ -82,7 +128,11 @@ def start_training(character):
 
 
 def choice_char_class(char_name: str) -> Character:
-    """Выбрать класс персонажа."""
+    """
+    Choose a character class.
+
+    Return the character class object.
+    """
     game_classes = {'warrior': Warrior, 'mage': Mage, 'healer': Healer}
 
     approve_choice: str = None
